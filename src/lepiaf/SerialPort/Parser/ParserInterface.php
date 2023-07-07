@@ -7,11 +7,11 @@ interface ParserInterface
     /**
      * Parse data right after read from serial connection
      *
-     * @param array $chars array of chars
+     * @param string $chars
      *
      * @return mixed
      */
-    public function parse(array $chars);
+    public function parse(string $chars);
 
     /**
      * Separator use to split data

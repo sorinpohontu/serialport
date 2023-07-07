@@ -28,7 +28,7 @@ class SeparatorParser implements ParserInterface
     /**
      * {@inheritdoc}
      */
-    public function parse(array $chars)
+    public function parse(string $chars)
     {
         // Eliminate separator from string
         return str_replace($this->separator, '', $chars);

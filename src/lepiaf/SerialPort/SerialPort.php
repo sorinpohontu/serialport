@@ -121,7 +121,7 @@ class SerialPort
             do {
                 $char = fread($this->fd, 1);
                 // Add only non empty chars
-                if ($char) {
+                if ($char !== null) {
                     $chars .= $char;
                 }
             } while (substr_compare($chars, $separator, -strlen($separator), strlen($separator)) !== 0);
