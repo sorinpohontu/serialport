@@ -107,18 +107,39 @@ class SerialPort
     public function read()
     {
         $this->ensureDeviceOpen();
+        $separator = $this->getParser()->getSeparator();
 
-        $chars = [];
+        $chars = '';
 
-        do {
-            $char = fread($this->fd, 1);
-            if ($char === '') {
-                continue;
-            }
-            $chars[] = $char;
-        } while ($char !== $this->getParser()->getSeparator());
+        $r = [$this->fd];
+        $w = NULL;
+        $e = NULL;
+        $res = stream_select($r, $w, $e, 0);
+        if (($res === false) || ($res == 0)) {
+            return false;
+        } else {
+            do {
+                $char = fread($this->fd, 1);
+                // Add only non empty chars
+                if ($char) {
+                    $chars .= $char;
+                }
+            } while (substr_compare($chars, $separator, -strlen($separator), strlen($separator)) !== 0);
 
-        return $this->getParser()->parse($chars);
+            return $this->getParser()->parse($chars);
+        }
+    }
+
+    /**
+     * Read one char
+     *
+     * @return string
+     */
+    public function readChar()
+    {
+        $this->ensureDeviceOpen();
+
+        return fread($this->fd, 1);
     }
 
     /**

@@ -16,7 +16,7 @@ interface ParserInterface
     /**
      * Separator use to split data
      *
-     * @return string
+     * @return string|array
      */
     public function getSeparator();
 }

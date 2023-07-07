@@ -30,6 +30,7 @@ class SeparatorParser implements ParserInterface
      */
     public function parse(array $chars)
     {
-        return trim(implode('', $chars));
+        // Eliminate separator from string
+        return str_replace($this->separator, '', $chars);
     }
 }
